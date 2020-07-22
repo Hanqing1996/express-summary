@@ -1,0 +1,10 @@
+{
+  "name": "express-summary",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Hanqing1996 <zhq199622@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.17.1"
+  }
+}
