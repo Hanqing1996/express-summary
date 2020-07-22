@@ -3,3 +3,9 @@
 ```
 yarn add -D @types/express
 ```
+
+#### express-generator
+express 脚手架
+
+#### express --view=ejs .
+> 创建公共文件。ejs 是一个后端模板引擎。
