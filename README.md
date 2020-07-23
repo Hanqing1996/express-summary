@@ -1,3 +1,6 @@
+> get 也可以发送 content-type 为 json,xxx-form-urlencoded 的请求
+
+---
 #### 支持 ts
 ```
 yarn add -D @types/express
@@ -92,5 +95,99 @@ app.get('/', function (req, res, next) {
 ```
 * next('xxx'):跳过所有 non-error handling routing and middleware functions.
 > If you pass anything to the next() function (except the string 'route'), Express regards the current request as being an error and will skip any remaining non-error handling routing and middleware functions.
+---
+
+
+
+#### express.json()
+> 用于解析 Content-Type 为 json 的 request
+```
+var app = express();
+app.use(express.json())
+
+app.get('/', (req, res) => {
+    console.log(req.body);
+    res.send('Hello World!')
+})
+```
+
+#### express.urlencoded()
+> 用于解析 Content-Type 为 x-www-form-urlencoded 的 request
+
+#### express.text()
+> 用于解析 Content-Type 为 text/plain 的 request
+
+
+#### express.static
+> 
+```
+var app = express();
+app.use(express.static('yyy'))
+```
+```
+├── yyy 
+│ ├── index.html
+```
+此时访问 http://localhost:3000/ 即返回 index.html
+---
+#### req.range 
+> 分片下载常用
+* [HTTP请求范围](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Range_requests)
+    * 检测服务器端是否支持范围请求
+    * 从服务器端请求特定的范围
+---
+#### [res.set()](https://www.expressjs.com.cn/4x/api.html#res.set)
+> Sets the response’s HTTP header field to value
+
+#### res.status(code)
+> Sets the HTTP status for the response. 
+
+#### res.redirect
+```
+app.get('/',(req,res,next)=>{
+    res.redirect('/yyy')
+    next()
+})
+
+app.get('/yyy',(req,res,next)=>{
+    res.end('welcome th redirect page')
+})
+```
+等价于
+```
+app.get('/',(req,res,next)=>{
+    res.status(301) // 30x 表示重定向
+    res.location('/yyy')
+    next()
+})
+
+app.get('/yyy',(req,res,next)=>{
+    res.end('welcome th redirect page')
+})
+```
+
+#### router 是 app 的 mini 版本
+```
+var blogsRouter = require('./routes/blogs');
+
+var app = express();
+app.use('/blogs', blogsRouter)
+```
+```
+// blogs.js
+var express = require('express');
+var router = express.Router();
+
+router.use('/:id', function(req, res, next) {
+    res.send('blog/:id');
+});
+
+router.use('/:id/edit', function(req, res, next) {
+    res.send('blog/:id/edit');
+});
+
+module.exports = router;
+```
+
 
 
